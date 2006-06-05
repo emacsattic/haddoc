@@ -1,0 +1,16 @@
+==========================================================================
+   haddoc: A Tool to Browse HTML Python Documentation From Command-Line
+==========================================================================
+
+
+
+- A simple Python script that will parse the various HTML indexes of the Python
+  documentation and create some kind of searcheable database.
+
+- A simple command-line tool that will search that database and bring a web
+  browser to that documentation.
+
+- An emacs hook that can call this tool to bring up a browser with the
+  given documentation.
+
+
