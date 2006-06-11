@@ -10,7 +10,7 @@ import urllib, htmllib, formatter
 
 import docbro
 
-def process_index( url, db ):
+def process_index(url, db):
     """
     Parse an index filename into a dictionary of name -> URL.
     """
@@ -41,15 +41,15 @@ class IndexProcessor(htmllib.HTMLParser):
         self.dirn = dirn
         self.do_entry = 0
 
-    def start_dt( self, att ):
+    def start_dt(self, att):
         self.do_entry = 1
 
-    def start_a( self, att ):
+    def start_a(self, att):
         if self.do_entry:
             self.url = join(self.dirn, dict(att)['href'])
             self.save_bgn()
 
-    def end_a( self ):
+    def end_a(self):
         if self.do_entry:
             name = self.save_end()
             if name != '[Link]':
