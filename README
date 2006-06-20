@@ -8,12 +8,11 @@
       1.1  Motivation
       1.2  Design
     2  Documentation
-      2.1  Screenshots
     3  Download
-    4  Reporting Bugs
-    5  Installation
-      5.1  Dependencies
-      5.2  Portability
+    4  Installation
+      4.1  Dependencies
+      4.2  Portability
+    5  Reporting Bugs
     6  External Links
     7  Copyright and License
     8  Author
@@ -30,7 +29,13 @@ Motivation
 Even though I have the Python TexInfo documentation installed from my Emacs,
 somehow I always end up browsing the documentation from a web browser.  Most of
 the time I start from either the Python Library Reference or from the index.  I
-wanted to be able to bring up the documentation from within Emacs. 
+wanted to be able to bring up the documentation from within Emacs.   This does
+it.  
+
+With haddoc, you invoke the elisp function ``haddoc-lookup`` (I type ``C-c .``),
+enter some search terms, and the matches from the Python indexes are shown in a
+buffer, from which you can select to direct your external web browser to.  I
+like to drive an external Firefox with it.
 
 
 Design
@@ -115,6 +120,13 @@ Portability
 
 * I have not tried with Xemacs, and I won't.  If you want to fix it, send me the
   changes.  Otherwise I won't bother. 
+
+
+Reporting Bugs
+==============
+
+* I will be happy to integrate patches if you can submit them (I will not debug
+  your ``.emacs``).
 
 
 External Links
