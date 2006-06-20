@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""haddoc-update [<options>] <html-doc>
+"""haddoc-update <html-doc>
 
 Update the database of search terms to URLs.
 """

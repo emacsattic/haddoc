@@ -2,7 +2,8 @@
 
 """
 Haddoc library for looking up entries from the Python index to a web browser
-from emacs.
+from emacs.  All the code is here.  The scripts are just simple hooks that call
+code in this library.
 """
 
 # stdlib imports

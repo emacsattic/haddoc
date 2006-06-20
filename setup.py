@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Install script for tengis.
+# Install script for haddoc.
 #
 
 __version__ = "$Revision$"

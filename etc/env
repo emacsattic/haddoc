@@ -5,23 +5,6 @@
 # My environment initialization for this project.  This could or could not be
 # used as an example for your own settings for development.
 
-
-#-------------------------------------------------------------------------------
-# variables for jukebox configuration
-
-JUKEBOX="/mnt/jukebox"
-JUKEBOX_XML="$PROJECTS/jukebox-data"
-## JUKEBOX_COVERS="$PROJECTS/jukebox-data/jukebox.covers"
-
-JUKEBOX_PLAYFILE="$PROJECTS/priv/playfiles/playmon-index.xml"
-JUKEBOX_INDEXES="$PROJECTS/priv/cdindex"
-export JUKEBOX JUKEBOX_XML JUKEBOX_PLAYFILE JUKEBOX_INDEXES
-
 USERPATH=$USERPATH:$PROJDIR/bin
 PYTHONPATH=$PYTHONPATH:$PROJDIR/lib/python
 
-# conveniences for shell typing, don't export.
-JB=$JUKEBOX
-JBXML=$JUKEBOX_XML
-
-unset DATADIR

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-"""
-Lookup a string in the Python documentation.
+"""haddoc-lookup <search-term> [<search-term> ...]
+
+Lookup some search terms in the Python documentation indexes.
 """
 
 import sys
