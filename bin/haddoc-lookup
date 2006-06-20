@@ -4,38 +4,21 @@
 Lookup a string in the Python documentation.
 """
 
-import anydbm, re, webbrowser
-from os.path import *
-
+import sys
 import haddoc
 
 def main():
     import optparse
     parser = optparse.OptionParser(__doc__.strip())
+    haddoc.add_options(parser)
     opts, args = parser.parse_args()
 
     if not args:
         parser.error("You need to specify some search terms.")
-
-    # (Really lame algorithm, but the database is small, so it's fast enough.)
-
-    # Read all the keys from the database.
-    db = anydbm.open(haddoc.dbfile, 'r')
-    keys = db.keys()
-
-    results = []
-    for term in args:
-        results.extend( (x, db[x]) for x in
-                         filter(re.compile(re.escape(term)).search, keys) )
-
-    db.close()
-    results.sort()
-
-    for name, url in results:
-        print name, url
-##         webbrowser.open(url)
-
+    
+    haddoc.lookup_print(opts.haddoc_database, args, sys.stdout)
 
 if __name__ == '__main__':
     main()
+
 

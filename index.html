@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/" />
-<title>haddoc: A Tool to Browse HTML Python Documentation From Command-Line</title>
+<title>haddoc: Browse HTML Python Documentation From Emacs</title>
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 <body>
@@ -14,17 +14,152 @@
   
 </div>
 
-<div class="document" id="haddoc-a-tool-to-browse-html-python-documentation-from-command-line">
-<h1 class="title">haddoc: A Tool to Browse HTML Python Documentation From Command-Line</h1>
+<div id="download-link"><a href="/downloads/haddoc/">Download</a></div>
 
+<div class="document" id="haddoc-browse-html-python-documentation-from-emacs">
+<h1 class="title">haddoc: Browse HTML Python Documentation From Emacs</h1>
+
+<div class="contents topic">
+<p class="topic-title first"><a id="table-of-contents" name="table-of-contents">Table of Contents</a></p>
 <ul class="simple">
-<li>A simple Python script that will parse the various HTML indexes of the Python
-documentation and create some kind of searcheable database.</li>
-<li>A simple command-line tool that will search that database and bring a web
-browser to that documentation.</li>
-<li>An emacs hook that can call this tool to bring up a browser with the
-given documentation.</li>
+<li><a class="reference" href="#description" id="id2" name="id2">Description</a><ul>
+<li><a class="reference" href="#motivation" id="id3" name="id3">Motivation</a></li>
+<li><a class="reference" href="#design" id="id4" name="id4">Design</a></li>
 </ul>
+</li>
+<li><a class="reference" href="#documentation" id="id5" name="id5">Documentation</a></li>
+<li><a class="reference" href="#download" id="id6" name="id6">Download</a></li>
+<li><a class="reference" href="#installation" id="id7" name="id7">Installation</a><ul>
+<li><a class="reference" href="#dependencies" id="id8" name="id8">Dependencies</a></li>
+<li><a class="reference" href="#portability" id="id9" name="id9">Portability</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#external-links" id="id10" name="id10">External Links</a></li>
+<li><a class="reference" href="#copyright-and-license" id="id11" name="id11">Copyright and License</a></li>
+<li><a class="reference" href="#author" id="id12" name="id12">Author</a></li>
+</ul>
+</div>
+<!-- 1  Description
+  1.1  Motivation
+  1.2  Design
+2  Documentation
+  2.1  Screenshots
+3  Download
+4  Reporting Bugs
+5  Installation
+  5.1  Dependencies
+  5.2  Portability
+6  External Links
+7  Copyright and License
+8  Author -->
+<div class="section">
+<h1><a class="toc-backref" href="#id2" id="description" name="description">Description</a></h1>
+<p>Haddoc is a simple tool that allows an emacs user to search the Python HTML
+documentation indexes and to bring a web browser to an index term page.</p>
+<div class="section">
+<h2><a class="toc-backref" href="#id3" id="motivation" name="motivation">Motivation</a></h2>
+<p>Even though I have the Python TexInfo documentation installed from my Emacs,
+somehow I always end up browsing the documentation from a web browser.  Most of
+the time I start from either the Python Library Reference or from the index.  I
+wanted to be able to bring up the documentation from within Emacs.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id4" id="design" name="design">Design</a></h2>
+<p>I took the simple approach and wrote a combination of Emacs-LISP and Python code
+to implement this:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">haddoc-update</span></tt>: a Python script that will parse the HTML documentation
+indexes and generate a mapping of the index entries to the HTML pages in a DBM
+database (in <tt class="docutils literal"><span class="pre">/var/lib/haddoc/haddoc.db</span></tt> by default)</li>
+<li><tt class="docutils literal"><span class="pre">haddoc-lookup</span></tt>: a Python script that does a lookup of search terms
+(potentially incomplete) on the index keys and returns the page references for
+each of the search terms on stdout</li>
+<li><tt class="docutils literal"><span class="pre">haddoc.el</span></tt>: an Emacs-LISP package that can query the results of
+<tt class="docutils literal"><span class="pre">haddoc-lookup</span></tt> and spawn a webbrowser to the appropriate pages.</li>
+</ul>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id5" id="documentation" name="documentation">Documentation</a></h1>
+<p>Use the source, this is a small hack, I will not bother.  If you cannot use the
+source, please do not use this code.</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id6" id="download" name="download">Download</a></h1>
+<ul class="simple">
+<li><a class="reference" href="/downloads/haddoc/">Download</a></li>
+</ul>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id7" id="installation" name="installation">Installation</a></h1>
+<ul>
+<li><p class="first">Download the code and unpack it.  Install it using <tt class="docutils literal"><span class="pre">distutils</span></tt>:</p>
+<pre class="literal-block">
+python setup.py install
+</pre>
+<p>(You may need to run this as superuser.)</p>
+</li>
+<li><p class="first">Initialize the haddoc database:</p>
+<pre class="literal-block">
+haddoc-update file:///path/to/python/html
+</pre>
+<p>(You may need to run this as superuser.)  Note that you can specify an URL to
+the online documentation if desired.</p>
+<p>By default the database will be created in <tt class="docutils literal"><span class="pre">/var/lib/haddoc</span></tt>; If you would
+like to create it someplace else, use the appropriate option, for example:</p>
+<pre class="literal-block">
+haddoc-update -D /home/myuser/.haddoc/haddoc.db &lt;URL&gt;
+</pre>
+</li>
+<li><p class="first">Try running the lookup tool from the command-line:</p>
+<pre class="literal-block">
+haddoc-lookup waitpid
+</pre>
+<p>You should get some result lines.  If this does not work, fix the problem.</p>
+</li>
+<li><p class="first">Copy <tt class="docutils literal"><span class="pre">haddoc.el</span></tt> somewhere in your Emacs load-path, and add something like
+this to your <tt class="docutils literal"><span class="pre">.emacs</span></tt> in your Python customizations section to create a
+binding in <tt class="docutils literal"><span class="pre">python-mode</span></tt>:</p>
+<pre class="literal-block">
+(require 'haddoc)
+(define-key py-mode-map [(control c)(?.)] 'haddoc-lookup)
+</pre>
+<p>You may need to require <tt class="docutils literal"><span class="pre">'python-mode</span></tt>.</p>
+</li>
+<li><p class="first">Customize the elisp package <tt class="docutils literal"><span class="pre">browse-url.el</span></tt> if you don't like the way that
+the browser is controlled, or to select your favourite browser program.</p>
+</li>
+</ul>
+<div class="section">
+<h2><a class="toc-backref" href="#id8" id="dependencies" name="dependencies">Dependencies</a></h2>
+<ul class="simple">
+<li>Requires Python and Emacs.</li>
+</ul>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id9" id="portability" name="portability">Portability</a></h2>
+<ul class="simple">
+<li>I have not tried with Xemacs, and I won't.  If you want to fix it, send me the
+changes.  Otherwise I won't bother.</li>
+</ul>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id10" id="external-links" name="external-links">External Links</a></h1>
+<ul class="simple">
+<li><a class="reference" href="http://docs.python.org">Python HTML documentation</a></li>
+<li><a class="reference" href="http://www.gnu.org/software/emacs/">GNU Emacs (what are you waiting for?)</a></li>
+</ul>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id11" id="copyright-and-license" name="copyright-and-license">Copyright and License</a></h1>
+<p>Copyright (C) 2001-2004  Martin Blais.  All Rights Reserved.</p>
+<p>This code is distributed under the <a class="reference" href="COPYING">GNU General Public License</a>;</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id12" id="author" name="author">Author</a></h1>
+<p>Martin Blais &lt;<a class="reference" href="mailto:blais&#64;furius.ca">blais&#64;furius.ca</a>&gt;</p>
+</div>
 </div>
 </body>
 </html>

@@ -1,81 +1,26 @@
 #!/usr/bin/env python
 
-"""
+"""haddoc-update [<options>] <html-doc>
+
 Update the database of search terms to URLs.
 """
 
-import os, anydbm
-from os.path import *
-import urllib, htmllib, formatter
-
-import docbro
-
-def process_index(url, db):
-    """
-    Parse an index filename into a dictionary of name -> URL.
-    """
-    dirn = dirname(url)
-
-    try:
-        htfile = urllib.urlopen(url)
-        text = htfile.read()
-        htfile.close()
-    except IOError, e:
-        raise SystemExit("Error: fetching file from the web: '%s'", e)
-
-    try:
-        parser = IndexProcessor(db, dirn)
-        parser.feed(text)
-        parser.close()
-    except IOError, e:
-        raise SystemExit("Error: fetching file from the web: '%s'", e)
-
-
-class IndexProcessor(htmllib.HTMLParser):
-    """
-    Extract the index links.
-    """
-    def __init__(self, db, dirn):
-        htmllib.HTMLParser.__init__(self, formatter.NullFormatter())
-        self.db = db
-        self.dirn = dirn
-        self.do_entry = 0
-
-    def start_dt(self, att):
-        self.do_entry = 1
-
-    def start_a(self, att):
-        if self.do_entry:
-            self.url = join(self.dirn, dict(att)['href'])
-            self.save_bgn()
-
-    def end_a(self):
-        if self.do_entry:
-            name = self.save_end()
-            if name != '[Link]':
-                self.name = name
-            self.db[self.name] = self.url
-            self.url = None
-
+import sys
+import haddoc
 
 def main():
     import optparse
     parser = optparse.OptionParser(__doc__.strip())
+    haddoc.add_options(parser)
     opts, args = parser.parse_args()
 
-    # Look for the HTML index files and process them.
-    db = anydbm.open(docbro.dbfile, 'n')
+    if len(args) != 1:
+        parser.error(
+            "This program requires the location of the documentation indexes.")
+    html_doc = args[0]
+        
+    haddoc.update(opts.haddoc_database, html_doc, sys.stdout)
 
-    genindex = 'genindex.html'
-    indexes = []
-    for root, dirs, files in os.walk(docbro.base):
-        if genindex in files:
-            indexes.append(join(root, genindex))
-    for fn in indexes:
-        print "Processing file '%s'." % fn
-        process_index('file://%s' % fn, db)
-
-    db.close()
 
 if __name__ == '__main__':
     main()

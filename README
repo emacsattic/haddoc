@@ -1,16 +1,139 @@
-==========================================================================
-   haddoc: A Tool to Browse HTML Python Documentation From Command-Line
-==========================================================================
+=========================================================
+   haddoc: Browse HTML Python Documentation From Emacs
+=========================================================
+
+.. contents:: Table of Contents
+..
+    1  Description
+      1.1  Motivation
+      1.2  Design
+    2  Documentation
+      2.1  Screenshots
+    3  Download
+    4  Reporting Bugs
+    5  Installation
+      5.1  Dependencies
+      5.2  Portability
+    6  External Links
+    7  Copyright and License
+    8  Author
+
+Description
+===========
+
+Haddoc is a simple tool that allows an emacs user to search the Python HTML
+documentation indexes and to bring a web browser to an index term page.
+
+Motivation
+----------
+
+Even though I have the Python TexInfo documentation installed from my Emacs,
+somehow I always end up browsing the documentation from a web browser.  Most of
+the time I start from either the Python Library Reference or from the index.  I
+wanted to be able to bring up the documentation from within Emacs. 
 
 
+Design
+------
 
-- A simple Python script that will parse the various HTML indexes of the Python
-  documentation and create some kind of searcheable database.
+I took the simple approach and wrote a combination of Emacs-LISP and Python code
+to implement this:
 
-- A simple command-line tool that will search that database and bring a web
-  browser to that documentation.
+* ``haddoc-update``: a Python script that will parse the HTML documentation
+  indexes and generate a mapping of the index entries to the HTML pages in a DBM
+  database (in ``/var/lib/haddoc/haddoc.db`` by default)
 
-- An emacs hook that can call this tool to bring up a browser with the
-  given documentation.
+* ``haddoc-lookup``: a Python script that does a lookup of search terms
+  (potentially incomplete) on the index keys and returns the page references for
+  each of the search terms on stdout
 
+* ``haddoc.el``: an Emacs-LISP package that can query the results of
+  ``haddoc-lookup`` and spawn a webbrowser to the appropriate pages.
+
+
+Documentation
+=============
+
+Use the source, this is a small hack, I will not bother.  If you cannot use the
+source, please do not use this code.
+
+
+Download
+========
+
+- `Download </downloads/haddoc/>`_
+
+
+Installation
+============
+
+* Download the code and unpack it.  Install it using ``distutils``::
+
+     python setup.py install
+
+  (You may need to run this as superuser.)
+
+* Initialize the haddoc database::
+
+     haddoc-update file:///path/to/python/html
+
+  (You may need to run this as superuser.)  Note that you can specify an URL to
+  the online documentation if desired.
+
+  By default the database will be created in ``/var/lib/haddoc``; If you would
+  like to create it someplace else, use the appropriate option, for example::
+
+     haddoc-update -D /home/myuser/.haddoc/haddoc.db <URL>
+
+* Try running the lookup tool from the command-line::
+
+     haddoc-lookup waitpid
+
+  You should get some result lines.  If this does not work, fix the problem.
+
+* Copy ``haddoc.el`` somewhere in your Emacs load-path, and add something like
+  this to your ``.emacs`` in your Python customizations section to create a
+  binding in ``python-mode``::
+
+    (require 'haddoc)
+    (define-key py-mode-map [(control c)(?.)] 'haddoc-lookup)
+
+  You may need to require ``'python-mode``.
+
+* Customize the elisp package ``browse-url.el`` if you don't like the way that
+  the browser is controlled, or to select your favourite browser program.
+
+
+Dependencies
+------------
+
+* Requires Python and Emacs.
+
+
+Portability
+-----------
+
+* I have not tried with Xemacs, and I won't.  If you want to fix it, send me the
+  changes.  Otherwise I won't bother. 
+
+
+External Links
+==============
+
+* `Python HTML documentation <http://docs.python.org>`_
+* `GNU Emacs (what are you waiting for?) <http://www.gnu.org/software/emacs/>`_
+
+
+Copyright and License
+=====================
+
+Copyright (C) 2001-2004  Martin Blais.  All Rights Reserved.
+
+This code is distributed under the `GNU General Public License <COPYING>`_;
+
+
+Author
+======
+
+Martin Blais <blais@furius.ca>
 
