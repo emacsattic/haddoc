@@ -2,6 +2,8 @@
    CHANGES: haddoc
 =====================
 
+- Fixed many bugs thanks to reporting from Stefan Reichör.
+
 - Added missing filter function (thanks to Jinwei Shen for
   reporting the bug).
 

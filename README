@@ -61,6 +61,10 @@ Documentation
 
 Use the source.
 
+.. note:: 
+   
+   This will not work on Python HTML documentation before Python-2.3.3.  Update
+   your documentation if necessary (or fix the code).
 
 Download
 ========
