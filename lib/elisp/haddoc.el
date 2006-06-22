@@ -88,7 +88,7 @@
 	(progn
 	  (beginning-of-line)
 	  (message "Browsing: \"%s\"" (strip-whitespace (thing-at-point 'line)))
-	  (browse-url url))
+	  (browse-url (haddoc-normalize-url url)))
       (error "No URL on this line"))))
 
 (defvar haddoc-return-buffer nil)
@@ -109,7 +109,8 @@
     (lambda (x) (> (length x) 0))
     (split-string
      (with-output-to-string
-       (call-process haddoc-lookup-program nil standard-output nil search-term))
+       (call-process haddoc-lookup-program nil standard-output nil 
+		     search-term))
      "\n"))))
 
 (defun haddoc-complete (search-term pred tr)
@@ -136,9 +137,9 @@
      ;; 1. A single result.
      ((= (length matches) 1)  
       ;; Point the browser at the unique result and get rid of the buffer
-      (let ((data (split-string (thing-at-point 'line) ";")))
+      (let ((data (car matches)))
 	(message "Browsing: \"%s\"" (car data))
-	(browse-url (cadr data)))
+	(browse-url (haddoc-normalize-url (cadr data))))
       )
 
      ;; N. Multiple results.
@@ -174,17 +175,34 @@
       ))
     )
 
+(defun haddoc-normalize-url (path)
+  "Make sure that the given path is a URL."
+  (if (or (string-match "/" path)
+	  (string-match "[a-z]:" path))
+      (concat "file://" path)
+    path))
 
-;; Filter function, in case it is not defined.
-(if (not (fboundp 'filter))
-    (defun filter (pred list)
-      "Returns a list of all the elements fulfilling the pred requirement."
-      (if list
-          (let ((head (car list))
-                (tail (filter pred (cdr list))))
-            (if (funcall pred head)
-                (cons head tail)
-              tail)))))
+;;; Generic functions missing from EMacs:
+
+(unless (fboundp 'filter)
+  (defun filter (pred list)
+    "Returns a list of all the elements fulfilling the pred requirement."
+    (if list
+	(let ((head (car list))
+	      (tail (filter pred (cdr list))))
+	  (if (funcall pred head)
+	      (cons head tail)
+	    tail)))))
+
+(unless (fboundp 'strip-whitespace)
+  (defun strip-whitespace (str)
+    "Strips the whitespace around a string."
+    (let ((tmp))
+      (string-match "\\`[ \t\n]*" str)
+      (setq tmp (substring str (match-end 0)))
+      (string-match "[ \t\n]*\\'" tmp)
+      (substring tmp 0 (match-beginning 0))
+      )))
 
 
 

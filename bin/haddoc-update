@@ -5,7 +5,7 @@
 Update the database of search terms to URLs.
 """
 
-import sys
+import sys, re
 import haddoc
 
 def main():
@@ -18,7 +18,11 @@ def main():
         parser.error(
             "This program requires the location of the documentation indexes.")
     html_doc = args[0]
-        
+    
+    if not re.match('[a-z][a-z]+://', html_doc):
+        parser.error("The supplied location must be a URL, "
+                     "i.e. http://... or file://...")
+
     haddoc.update(opts.haddoc_database, html_doc, sys.stdout)
 
 

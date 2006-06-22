@@ -32,7 +32,7 @@ def add_options(parser):
     Add the necessary options for haddoc programs.
     """
     parser.add_option(
-        '-D', '--haddoc-database', action='store_true',
+        '-D', '--haddoc-database', action='store',
         default=os.environ.get('HADDOC_DATABASE', def_dbfile),
         help="Location of haddoc database filename (default: %s)" % def_dbfile)
 
