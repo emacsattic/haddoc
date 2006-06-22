@@ -45,7 +45,17 @@
 (require 'browse-url)
 
 (defvar haddoc-lookup-program "haddoc-lookup"
-  "If set, the location of `haddoc-lookup' program.")
+  "The location of `haddoc-lookup' program.")
+
+(defvar haddoc-update-program "haddoc-update"
+  "The location of `haddoc-update' program.")
+
+(defvar haddoc-db-file "/var/lib/haddoc/haddoc.db"
+  "The location for the haddoc database file.")
+
+(defvar haddoc-documentation-locations
+  '("file:///usr/share/doc/python/html" "http://python.org/doc/html")
+  "A list of possible python documentation locations")
 
 (defvar haddoc-history nil)
 
@@ -87,7 +97,7 @@
     (if url
 	(progn
 	  (beginning-of-line)
-	  (message "Browsing: \"%s\"" (strip-whitespace (thing-at-point 'line)))
+	  (message "Browsing: \"%s\"" (haddoc-strip-whitespace (thing-at-point 'line)))
 	  (browse-url (haddoc-normalize-url url)))
       (error "No URL on this line"))))
 
@@ -105,12 +115,12 @@
   "Runs a lookup process and returns a list of (term, url) pairs."
   (mapcar 
    (lambda (x) (split-string x ";"))
-   (filter 
+   (haddoc-filter 
     (lambda (x) (> (length x) 0))
     (split-string
      (with-output-to-string
        (call-process haddoc-lookup-program nil standard-output nil 
-		     search-term))
+		     "-D" (expand-file-name haddoc-db-file) search-term))
      "\n"))))
 
 (defun haddoc-complete (search-term pred tr)
@@ -182,27 +192,33 @@
       (concat "file://" path)
     path))
 
-;;; Generic functions missing from EMacs:
+;;; Generic functions missing from Emacs:
 
-(unless (fboundp 'filter)
-  (defun filter (pred list)
-    "Returns a list of all the elements fulfilling the pred requirement."
-    (if list
-	(let ((head (car list))
-	      (tail (filter pred (cdr list))))
-	  (if (funcall pred head)
-	      (cons head tail)
-	    tail)))))
+(defun haddoc-filter (pred list)
+  "Returns a list of all the elements fulfilling the pred requirement."
+  (if list
+      (let ((head (car list))
+	    (tail (haddoc-filter pred (cdr list))))
+	(if (funcall pred head)
+	    (cons head tail)
+	  tail))))
 
-(unless (fboundp 'strip-whitespace)
-  (defun strip-whitespace (str)
-    "Strips the whitespace around a string."
-    (let ((tmp))
-      (string-match "\\`[ \t\n]*" str)
-      (setq tmp (substring str (match-end 0)))
-      (string-match "[ \t\n]*\\'" tmp)
-      (substring tmp 0 (match-beginning 0))
-      )))
+(defun haddoc-strip-whitespace (str)
+  "Strips the whitespace around a string."
+  (let ((tmp))
+    (string-match "\\`[ \t\n]*" str)
+    (setq tmp (substring str (match-end 0)))
+    (string-match "[ \t\n]*\\'" tmp)
+    (substring tmp 0 (match-beginning 0))
+    ))
+
+(defun haddoc-update (src)
+  "Run haddoc-update and create the database at `haddoc-db-file'."
+  (interactive (list (completing-read "Python Html Documentation source: "
+                                      haddoc-documentation-locations)))
+  ;; haddoc-update -D /home/myuser/.haddoc/haddoc.db <URL>
+  (shell-command (concat (expand-file-name haddoc-update-program) " -D "
+                         (expand-file-name haddoc-db-file) " " src)))
 
 
 
