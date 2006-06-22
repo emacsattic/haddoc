@@ -174,6 +174,19 @@
       ))
     )
 
+
+;; Filter function, in case it is not defined.
+(if (not (fboundp 'filter))
+    (defun filter (pred list)
+      "Returns a list of all the elements fulfilling the pred requirement."
+      (if list
+          (let ((head (car list))
+                (tail (filter pred (cdr list))))
+            (if (funcall pred head)
+                (cons head tail)
+              tail)))))
+
+
 
 (provide 'haddoc)
 ;;; haddoc.el ends here
