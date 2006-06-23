@@ -8,3 +8,5 @@
 USERPATH=$USERPATH:$PROJDIR/bin
 PYTHONPATH=$PYTHONPATH:$PROJDIR/lib/python
 
+HADDOC_HTMLDOC=file:///home/blais/py/trunk/Doc/html
+export HADDOC_HTMLDOC

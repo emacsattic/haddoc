@@ -2,6 +2,12 @@
    CHANGES: haddoc
 =====================
 
+
+- Added suffix that shows what document index a term comes from.
+
+- Fixed bug with entries with same name appearing in different indexes being
+  overwritten.
+
 - Applied patch from Stefan Reichör for haddoc-update from within emacs.
 
 - Fixed many bugs thanks to reporting from Stefan Reichör.

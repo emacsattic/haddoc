@@ -7,7 +7,7 @@ code in this library.
 """
 
 # stdlib imports
-import os, re, anydbm, urllib, htmllib, formatter
+import os, re, anydbm, urllib, htmllib, formatter, itertools
 from os.path import *
 
 # haddoc imports
@@ -55,15 +55,15 @@ def update(dbfilename, htmldoc, oss):
         raise SystemExit("Error: Cannot access DB files.")
 
     genindex = 'genindex.html'
-    for indexfn in [join(htmldoc, x, genindex) for x in
-                    ('api', 'lib', 'mac', 'ref', 'dist')]:
+    for book, indexfn in [(x, join(htmldoc, x, genindex)) for x in
+                          ('api', 'lib', 'mac', 'ref', 'dist')]:
         print >> oss, "Processing file '%s'." % indexfn
-        process_index(indexfn, db)
+        process_index(indexfn, db, book)
 
     db.close()
 
 
-def process_index(url, db):
+def process_index(url, db, book):
     """
     Parse an index filename into a dictionary of name -> URL.
     """
@@ -77,7 +77,7 @@ def process_index(url, db):
         raise SystemExit("Error: fetching file from the web: '%s'", e)
 
     try:
-        parser = IndexProcessor(db, dirn)
+        parser = IndexProcessor(db, dirn, book)
         parser.feed(text)
         parser.close()
     except IOError, e:
@@ -88,12 +88,13 @@ class IndexProcessor(htmllib.HTMLParser):
     """
     Extract the index links from a Python HTML documentation index.
     """
-    def __init__(self, db, dirn):
+    def __init__(self, db, dirn, book):
         htmllib.HTMLParser.__init__(self, formatter.NullFormatter())
         self.db = db
         self.dirn = dirn
+        self.book = book
         self.do_entry = 0
-
+        
     def start_dt(self, att):
         self.do_entry = 1
 
@@ -107,9 +108,13 @@ class IndexProcessor(htmllib.HTMLParser):
             name = self.save_end()
             if name != '[Link]':
                 self.name = name
-            self.db[self.name] = self.url
+                
+            tname = '%s [%s]' % (self.name, self.book)
+            c = itertools.count(1)
+            while tname in self.db:
+                tname = '%s [%s/%d]' % (self.name, self.book, c.next())
+            self.db[tname] = self.url
             self.url = None
-
 
 #-------------------------------------------------------------------------------
 #
