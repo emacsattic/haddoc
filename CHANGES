@@ -3,6 +3,8 @@
 =====================
 
 
+- Applied patch from Stefan Reichör for window config.
+
 - Added suffix that shows what document index a term comes from.
 
 - Fixed bug with entries with same name appearing in different indexes being
