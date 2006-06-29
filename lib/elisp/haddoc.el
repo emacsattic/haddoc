@@ -25,6 +25,10 @@
 ;; From a database of parsed Python HTML indexes, queries that database using an
 ;; external tool (haddoc-lookup) and directs a web browser to the selected page.
 
+;; The database can be constructed via emacs:
+;; (setq haddoc-db-file "~/haddoc.db")
+;; M-x haddoc-update
+
 ;; Bind the `haddoc-lookup' function to some key and enter the desired search
 ;; terms.  I use this::
 ;;
@@ -101,15 +105,13 @@
 	  (browse-url (haddoc-normalize-url url)))
       (error "No URL on this line"))))
 
-(defvar haddoc-return-buffer nil)
-;;(make-variable-buffer-local 'haddoc-return-buffer)
+(defvar haddoc-return-window-config nil)
+;;(make-variable-buffer-local 'haddoc-return-window-config)
 
 (defun haddoc-quit-window ()
   "Leave the completions window."
   (interactive)
-  (let ((popbuf haddoc-return-buffer))
-    (quit-window)
-    (pop-to-buffer popbuf)))
+  (set-window-configuration haddoc-return-window-config))
 
 (defun haddoc-do-lookup (search-term)
   "Runs a lookup process and returns a list of (term, url) pairs."
@@ -156,7 +158,7 @@
      (t
       ;; Decorate the temporary buffer lines with appropriate properties for
       ;; selection.
-      (let* ((curbuf (current-buffer))
+      (let* ((cur-window-conf (current-window-configuration))
 	     (tmpbuf (get-buffer-create haddoc-temp-buffer-name)))
     
 	(display-buffer tmpbuf)
@@ -179,7 +181,7 @@
 	(goto-line 3)
 	
 	(haddoc-mode)
-	(set (make-local-variable 'haddoc-return-buffer) curbuf)
+	(set (make-local-variable 'haddoc-return-window-config) cur-window-conf)
 
 	))
       ))
@@ -217,7 +219,7 @@
   (interactive (list (completing-read "Python Html Documentation source: "
                                       haddoc-documentation-locations)))
   ;; haddoc-update -D /home/myuser/.haddoc/haddoc.db <URL>
-  (shell-command (concat (expand-file-name haddoc-update-program) " -D "
+  (shell-command (concat haddoc-update-program " -D "
                          (expand-file-name haddoc-db-file) " " src)))
 
 
