@@ -23,6 +23,7 @@ Description
 Haddoc is a simple tool that allows an emacs user to search the Python HTML
 documentation indexes and to bring a web browser to an index term page.
 
+
 Motivation
 ----------
 
