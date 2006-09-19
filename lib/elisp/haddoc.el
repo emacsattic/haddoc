@@ -189,8 +189,8 @@
 
 (defun haddoc-normalize-url (path)
   "Make sure that the given path is a URL."
-  (if (or (string-match "/" path)
-	  (string-match "[a-z]:" path))
+  (if (or (string-match "^/" path)
+	  (string-match "^[a-z]:" path))
       (concat "file://" path)
     path))
 

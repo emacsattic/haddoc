@@ -74,14 +74,14 @@ def process_index(url, db, book):
         text = htfile.read()
         htfile.close()
     except IOError, e:
-        raise SystemExit("Error: fetching file from the web: '%s'", e)
+        raise SystemExit("Error: fetching file from the web: '%s'" % e)
 
     try:
         parser = IndexProcessor(db, dirn, book)
         parser.feed(text)
         parser.close()
     except IOError, e:
-        raise SystemExit("Error: fetching file from the web: '%s'", e)
+        raise SystemExit("Error: fetching file from the web: '%s'" % e)
 
 
 class IndexProcessor(htmllib.HTMLParser):
