@@ -2,3 +2,5 @@
    TODO: haddoc
 ==================
 
+- Make haddoc able to aggregate multiple sources of documentation.
+
