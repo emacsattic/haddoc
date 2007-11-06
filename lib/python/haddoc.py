@@ -111,7 +111,7 @@ class IndexProcessor(htmllib.HTMLParser):
                 
             tname = '%s [%s]' % (self.name, self.book)
             c = itertools.count(1)
-            while tname in self.db:
+            while tname in self.db.iterkeys():
                 tname = '%s [%s/%d]' % (self.name, self.book, c.next())
             self.db[tname] = self.url
             self.url = None
