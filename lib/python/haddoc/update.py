@@ -44,7 +44,7 @@ def main():
     conn.close()
 
 def cleanup(term):
-    term = re.sub('\(.*\)', '', term)
+    term = re.sub('\(.+\)', '', term)
     term = re.sub('\[.*\]', '', term)
     term = re.sub(',', '', term)
     return term
@@ -83,21 +83,33 @@ class IndexProcessor(htmllib.HTMLParser):
         self.dtlevel = 0
         self.last = None
         self.results = []
+        self.saved = None
+
+    def handle_data(self, data):
+        if self.saved is not None:
+            self.saved += data
 
     def start_dt(self, att):
         self.dtlevel += 1
-        self.save_bgn()
+        self.saved = self.saved or ''
 
     def end_dt(self):
         self.dtlevel -= 1
-        self.last = s = self.save_end()
-        if self.url is not None:
-            self.results.append((self.words + [s], self.url))
-        self.url = None
+        if self.saved:
+            self.last, self.saved = self.saved, None
+            self.url = None
+
 
     def start_a(self, att):
         d = dict(att)
         self.url = d['href']
+        self.saved = self.saved or ''
+
+    def end_a(self):
+        url, self.url = self.url, None
+        self.last, self.saved = self.saved, None
+        self.results.append((self.words + [self.last], url))
+
 
     def start_dd(self, att):
         self.words.append(self.last)

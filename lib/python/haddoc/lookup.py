@@ -4,6 +4,8 @@ Lookup some search terms in the index.
 
 import sys
 import haddoc
+from collections import defaultdict
+
 
 def main():
     import optparse
@@ -20,9 +22,19 @@ def main():
     rsets = []
     curs.execute("""
        SELECT term, source, fullname, url FROM terms
-       WHERE term ~ %s
+       WHERE term ~* %s
     """, ('.*'.join(args),))
+
+    res = defaultdict(list)
     for term, source, fullname, url in curs:
-        print '%s;%s' % (fullname, url)
+        res[url].append((source, fullname))
+
+    for url, rlist in res.iteritems():
+        print url
+        for source, fullname in rlist:
+            print "    %s: %s" % (source, fullname)
+        print
+
     conn.close()
+
 
