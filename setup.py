@@ -28,7 +28,7 @@ documentation indexes and to bring a web browser to an index term page.
       author_email="blais@furius.ca",
       url="http://furius.ca/haddoc",
       package_dir = {'': 'lib/python'},
-      py_modules = ['haddoc'],
-      scripts = ['bin/haddoc-update', 'bin/haddoc-lookup']
+      packages = ['haddoc'],
+      scripts = ['bin/haddoc-update', 'bin/haddoc']
      )
 
