@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.6: http://docutils.sourceforge.net/" />
 <title>haddoc: Browse HTML Python Documentation From Emacs</title>
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -19,25 +19,25 @@
 <div class="document" id="haddoc-browse-html-python-documentation-from-emacs">
 <h1 class="title">haddoc: Browse HTML Python Documentation From Emacs</h1>
 
-<div class="contents topic">
-<p class="topic-title first"><a id="table-of-contents" name="table-of-contents">Table of Contents</a></p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents</p>
 <ul class="simple">
-<li><a class="reference" href="#description" id="id2" name="id2">Description</a><ul>
-<li><a class="reference" href="#motivation" id="id3" name="id3">Motivation</a></li>
-<li><a class="reference" href="#design" id="id4" name="id4">Design</a></li>
+<li><a class="reference internal" href="#description" id="id2">Description</a><ul>
+<li><a class="reference internal" href="#motivation" id="id3">Motivation</a></li>
+<li><a class="reference internal" href="#design" id="id4">Design</a></li>
 </ul>
 </li>
-<li><a class="reference" href="#documentation" id="id5" name="id5">Documentation</a></li>
-<li><a class="reference" href="#download" id="id6" name="id6">Download</a></li>
-<li><a class="reference" href="#installation" id="id7" name="id7">Installation</a><ul>
-<li><a class="reference" href="#dependencies" id="id8" name="id8">Dependencies</a></li>
-<li><a class="reference" href="#portability" id="id9" name="id9">Portability</a></li>
+<li><a class="reference internal" href="#documentation" id="id5">Documentation</a></li>
+<li><a class="reference internal" href="#download" id="id6">Download</a></li>
+<li><a class="reference internal" href="#installation" id="id7">Installation</a><ul>
+<li><a class="reference internal" href="#dependencies" id="id8">Dependencies</a></li>
+<li><a class="reference internal" href="#portability" id="id9">Portability</a></li>
 </ul>
 </li>
-<li><a class="reference" href="#reporting-bugs" id="id10" name="id10">Reporting Bugs</a></li>
-<li><a class="reference" href="#external-links" id="id11" name="id11">External Links</a></li>
-<li><a class="reference" href="#copyright-and-license" id="id12" name="id12">Copyright and License</a></li>
-<li><a class="reference" href="#author" id="id13" name="id13">Author</a></li>
+<li><a class="reference internal" href="#reporting-bugs" id="id10">Reporting Bugs</a></li>
+<li><a class="reference internal" href="#external-links" id="id11">External Links</a></li>
+<li><a class="reference internal" href="#copyright-and-license" id="id12">Copyright and License</a></li>
+<li><a class="reference internal" href="#author" id="id13">Author</a></li>
 </ul>
 </div>
 <!-- 1  Description
@@ -52,12 +52,19 @@
 6  External Links
 7  Copyright and License
 8  Author -->
-<div class="section">
-<h1><a class="toc-backref" href="#id2" id="description" name="description">Description</a></h1>
+<div class="section" id="description">
+<h1><a class="toc-backref" href="#id2">Description</a></h1>
 <p>Haddoc is a simple tool that allows an emacs user to search the Python HTML
 documentation indexes and to bring a web browser to an index term page.</p>
-<div class="section">
-<h2><a class="toc-backref" href="#id3" id="motivation" name="motivation">Motivation</a></h2>
+<div class="important">
+<p class="first admonition-title">Important</p>
+<p class="last">[2009-12-03] I haven't used Haddoc in a while, and it's not in a
+working state at the moment. Feel free to try to scavenge bits and
+pieces to make it work again, but please don't expect a polished
+work at this point.</p>
+</div>
+<div class="section" id="motivation">
+<h2><a class="toc-backref" href="#id3">Motivation</a></h2>
 <p>Even though I have the Python TexInfo documentation installed from my Emacs,
 somehow I always end up browsing the documentation from a web browser.  Most of
 the time I start from either the Python Library Reference or from the index.  I
@@ -68,8 +75,8 @@ enter some search terms, and the matches from the Python indexes are shown in a
 buffer, from which you can select to direct your external web browser to.  I
 like to drive an external Firefox with it.</p>
 </div>
-<div class="section">
-<h2><a class="toc-backref" href="#id4" id="design" name="design">Design</a></h2>
+<div class="section" id="design">
+<h2><a class="toc-backref" href="#id4">Design</a></h2>
 <p>I took the simple approach and wrote a combination of Emacs-LISP and Python code
 to implement this:</p>
 <ul class="simple">
@@ -84,8 +91,8 @@ each of the search terms on stdout</li>
 </ul>
 </div>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id5" id="documentation" name="documentation">Documentation</a></h1>
+<div class="section" id="documentation">
+<h1><a class="toc-backref" href="#id5">Documentation</a></h1>
 <p>Use the source.</p>
 <div class="note">
 <p class="first admonition-title">Note</p>
@@ -93,14 +100,14 @@ each of the search terms on stdout</li>
 your documentation if necessary (or fix the code).</p>
 </div>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id6" id="download" name="download">Download</a></h1>
+<div class="section" id="download">
+<h1><a class="toc-backref" href="#id6">Download</a></h1>
 <ul class="simple">
-<li><a class="reference" href="/downloads/haddoc/">Download</a></li>
+<li><a class="reference external" href="/downloads/haddoc/">Download</a></li>
 </ul>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id7" id="installation" name="installation">Installation</a></h1>
+<div class="section" id="installation">
+<h1><a class="toc-backref" href="#id7">Installation</a></h1>
 <ul>
 <li><p class="first">Download the code and unpack it.  Install it using <tt class="docutils literal"><span class="pre">distutils</span></tt>:</p>
 <pre class="literal-block">
@@ -139,42 +146,42 @@ binding in <tt class="docutils literal"><span class="pre">python-mode</span></tt
 the browser is controlled, or to select your favourite browser program.</p>
 </li>
 </ul>
-<div class="section">
-<h2><a class="toc-backref" href="#id8" id="dependencies" name="dependencies">Dependencies</a></h2>
+<div class="section" id="dependencies">
+<h2><a class="toc-backref" href="#id8">Dependencies</a></h2>
 <ul class="simple">
 <li>Requires Python and Emacs.</li>
 </ul>
 </div>
-<div class="section">
-<h2><a class="toc-backref" href="#id9" id="portability" name="portability">Portability</a></h2>
+<div class="section" id="portability">
+<h2><a class="toc-backref" href="#id9">Portability</a></h2>
 <ul class="simple">
 <li>I have not tried with Xemacs, and I won't.  If you want to fix it, send me the
 changes.  Otherwise I won't bother.</li>
 </ul>
 </div>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id10" id="reporting-bugs" name="reporting-bugs">Reporting Bugs</a></h1>
+<div class="section" id="reporting-bugs">
+<h1><a class="toc-backref" href="#id10">Reporting Bugs</a></h1>
 <ul class="simple">
 <li>I will be happy to integrate patches if you can submit them (I will not debug
 your <tt class="docutils literal"><span class="pre">.emacs</span></tt>).</li>
 </ul>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id11" id="external-links" name="external-links">External Links</a></h1>
+<div class="section" id="external-links">
+<h1><a class="toc-backref" href="#id11">External Links</a></h1>
 <ul class="simple">
-<li><a class="reference" href="http://docs.python.org">Python HTML documentation</a></li>
-<li><a class="reference" href="http://www.gnu.org/software/emacs/">GNU Emacs (what are you waiting for?)</a></li>
+<li><a class="reference external" href="http://docs.python.org">Python HTML documentation</a></li>
+<li><a class="reference external" href="http://www.gnu.org/software/emacs/">GNU Emacs (what are you waiting for?)</a></li>
 </ul>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id12" id="copyright-and-license" name="copyright-and-license">Copyright and License</a></h1>
+<div class="section" id="copyright-and-license">
+<h1><a class="toc-backref" href="#id12">Copyright and License</a></h1>
 <p>Copyright (C) 2006  Martin Blais.  All Rights Reserved.</p>
-<p>This code is distributed under the <a class="reference" href="COPYING">GNU General Public License</a>;</p>
+<p>This code is distributed under the <a class="reference external" href="COPYING">GNU General Public License</a>;</p>
 </div>
-<div class="section">
-<h1><a class="toc-backref" href="#id13" id="author" name="author">Author</a></h1>
-<p>Martin Blais &lt;<a class="reference" href="mailto:blais&#64;furius.ca">blais&#64;furius.ca</a>&gt;</p>
+<div class="section" id="author">
+<h1><a class="toc-backref" href="#id13">Author</a></h1>
+<p>Martin Blais &lt;<a class="reference external" href="mailto:blais&#64;furius.ca">blais&#64;furius.ca</a>&gt;</p>
 </div>
 </div>
 </body>
