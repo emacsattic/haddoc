@@ -77,7 +77,11 @@ Use the source.
 Download
 ========
 
-- `Download </downloads/haddoc/>`_
+A Mercurial repository can be found at:
+
+  https://hg.furius.ca/public/haddoc/
+
+`Click here for download instructions. </web-furius/downloading.html>`_
 
 
 Installation
